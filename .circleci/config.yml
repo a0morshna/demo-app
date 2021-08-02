@@ -1,8 +1,10 @@
 version: 2.1
+
 jobs:
   build:
+    working_directory: ~/
     docker:
-      - image: google/cloud-sdk
+      - image: google/cloud-sdk:latest
         auth:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
@@ -15,19 +17,19 @@ jobs:
           docker save webbb:latest | gzip > webbb_latest.tar.gz
   push:
     docker:
-      - image: google/cloud-sdk
+      - image: google/cloud-sdk:latest
         auth:
           username: _json_key
           password: $DOCKER_PASSWORD
     steps:
       - run: 
-          name: Deploy 
+          name: GCP auth
           command: |
-            echo ${GCLOUD_SERVICE_KEY} > keyfile.json
-            gcloud auth activate-service-account --key-file=keyfile.json
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud --quiet app deploy
+            echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > keyfile.json
+            gcloud auth activate-service-account --key-file keyfile.json
+            gcloud --quiet config set project $GOOGLE_PROJECT_ID
+            gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
+
 workflows:
   version: 2
   build_and_push:

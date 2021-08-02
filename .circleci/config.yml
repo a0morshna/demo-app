@@ -23,7 +23,7 @@ jobs:
     docker:
       - image: google/cloud-sdk:latest
         auth:
-          username: _json_key
+          username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
     steps:
       - run: 

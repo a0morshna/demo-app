@@ -1,0 +1,249 @@
+@import "global";
+
+html
+{
+	scroll-behavior: smooth;
+}
+
+body
+{
+	font-family: Lato;
+	margin: 0;
+	padding: 0;
+	color: rgb(30, 30, 30);
+	font-size: 20px;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+a
+{
+	text-decoration: none;
+	outline: none;
+
+	&:active
+	{
+		outline: none;
+	}
+}
+
+.draw-btn
+{
+	@extend .btn;
+	padding: 10px 20px;
+	font-size: $btnFontSize;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.welcome
+{
+	background: url(../img/bg.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 50vh;
+	padding: 50px;
+	text-align: center;
+
+	h2
+	{
+		margin: 0;
+		text-align: center;
+		margin-bottom: 35vh;
+		color: rgba(0, 0, 0, 0.8);
+		text-shadow: 0 0 3px $light;
+		font-size: 42px;
+	}
+}
+
+.about
+{
+	text-align: center;
+	padding-top: 20px;
+
+	a
+	{
+		color: $primaryColorDark;
+
+		&:hover
+		{
+			color: $primaryColor;
+		}
+	}
+}
+
+.img-link
+{
+	background: url(../img/syncpaint-link.png);
+	background-position: center;
+	background-size: cover;
+	width: 263px;
+	height: 38px;
+	margin: 0 auto;
+}
+
+.grid
+{
+	display: grid;
+	grid-template-columns: 30% 60%;
+	grid-gap: 100px;
+	height: 350px;
+	justify-content: center;
+	align-content: center;
+	text-align: left;
+	margin: 0 auto;
+	padding: 50px 100px 50px 0;
+}
+
+.img-toolbar
+{
+	background: url(../img/toolbar.png);
+	background-position: center;
+	background-size: cover;
+	height: 300px;
+	width: 50px;
+	justify-self: end;
+}
+
+.text-box
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	h2, p
+	{
+		margin: 0;
+	}
+}
+
+.img-brush
+{
+	background: url(../img/brush-settings.png);
+	background-position: center;
+	background-size: cover;
+	width: 250px;
+	height: 39px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+}
+
+footer
+{
+	text-align: center;
+	background: $dark;
+	padding: 5px;
+	margin-top: 50px;
+	color: $light;
+	font-size: 16px;
+
+	a
+	{
+		color: $primaryColorLight;
+
+		&:hover
+		{
+			color: $linkColorLight;
+		}
+	}
+
+	p
+	{
+		margin: 0;
+	}
+}
+
+@media(prefers-reduced-motion: reduce)
+{
+	html
+	{
+		scroll-behavior: auto;
+	}
+}
+
+@media(max-width: 640px)
+{
+	.welcome
+	{
+		padding: 50px 10px;
+	}
+}
+
+@media(max-width: 570px)
+{
+	.welcome h2
+	{
+		font-size: 36px;
+	}
+
+	.draw-btn
+	{
+		font-size: 22px;
+	}
+}
+
+@media(max-width: 500px)
+{
+	.welcome h2
+	{
+		font-size: 32px;
+	}
+
+	.draw-btn
+	{
+		font-size: 20px;
+	}
+}
+
+@media(max-width: 430px)
+{
+	nav.menu
+	{
+		font-size: 14px;
+	}
+
+	.welcome
+	{
+		padding: 50px 5px;
+	}
+
+	.welcome h2
+	{
+		font-size: 28px;
+	}
+
+	.draw-btn
+	{
+		font-size: 18px;
+	}
+
+	.about h2
+	{
+		font-size: 24px;
+	}
+
+	body
+	{
+		font-size: 18px;
+	}
+
+	.grid
+	{
+		grid-gap: 30px;
+		grid-template-columns: 10% 50%;
+		padding: 30px 0 30px 0;
+	}
+
+	.img-link
+	{
+		width: 280px;
+	}
+}
+
+@media(max-width: 360px)
+{
+	a.draw-btn-alt
+	{
+		padding: 0;
+		border: none;
+	}
+}

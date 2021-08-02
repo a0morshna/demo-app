@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" class="draw">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>SyncPaint - Drawing Room</title>
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<header>
+		<nav class="menu-draw">
+			<ul>
+				<li class="brush-properties-container">
+					<div class="brush-properties">
+						<div class="color-preview">
+							<input type="color" id="color-selector" title="Change brush color"/>
+						</div>
+
+						<a href="#" class="btn-nav brush-size" ondragstart="return false;">
+							<span class="size-value" title="Change brush size">20px</span> <span>&#8597;</span>
+							<div class="brush-size-menu">
+								<ui-slider id="size-slider-mobile" class="size-slider" data-text="Size:" data-min="1" data-max="200" data-unit="px"></ui-slider>
+							</div>
+						</a>
+
+						<ui-slider id="size-slider-main" class="size-slider" data-text="Size:" data-min="1" data-max="200" data-unit="px"></ui-slider>
+					</div>
+				</li>
+
+				<li class="room">
+					<a href="#" id="room-url" title="Copy link to clipboard" data-clipboard="">
+						<span class="url-container">
+							<span>Connecting...</span>
+						</span>
+						<i class="fas fa-copy url-icon"></i>
+					</a>
+				</li>
+
+				<li class="options-container">
+					<div><a href="#" class="btn-nav" title="Save image to disk" id="save" download="canvas.png"><i class="fas fa-save"></i> <span class="responsive-icon-text">Save</span></a></div>
+					<div><a href="#" class="btn-nav" title="Settings" id="settings"><i class="fas fa-cog"></i> <span class="responsive-icon-text">Settings</span></a>
+						<div class="options-panel">
+							<label><i class="fas fa-user"></i> user name</label>
+							<input type="text" maxlength="30"/>
+
+							<div class="admin-settings hidden" id="admin-settings">
+								<span><i class="fas fa-expand"></i> canvas size</span>
+								<div class="canvas-size">
+									<input id="canvas-width" min="0" max="10000" type="number"/>
+									<input id="canvas-height" min="0" max="10000" type="number"/>
+								</div>
+
+								<button class="btn" id="canvas-size-apply" disabled>Apply</button>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<ui-toolbar id="toolbar"></ui-toolbar>
+		<div class="canvas-layers">
+			<canvas id="bgCanvas" oncontextmenu="return false;"></canvas>
+			<canvas id="drawArea" oncontextmenu="return false;"></canvas>
+			<canvas id="shapePreview" oncontextmenu="return false;"></canvas>
+			<div class="text-cursor hidden"></div>
+		</div>
+
+		<%= require('html-loader!./js/components/background-modal/background-modal.html') %>
+	</main>
+</body>
+</html>

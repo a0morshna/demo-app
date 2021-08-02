@@ -1,0 +1,238 @@
+@import "vars";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
+
+.menu
+{
+	margin: 0;
+	padding: 0;
+	background: $dark;
+	color: $light;
+	font-size: $navFontSize;
+	height: 39px;
+
+	a
+	{
+		color: $light;
+
+		&:hover
+		{
+			color: $linkColorLight;
+		}
+	}
+
+	ul
+	{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		align-items: center;
+		height: 100%;
+	}
+
+	ul li
+	{
+		text-align: center;
+	}
+
+	.logo-link
+	{
+		position: relative;
+		top: -3px;
+	}
+}
+
+.btn
+{
+	background-color: $primaryColor;
+	color: $light;
+	border-radius: 5px;
+	padding: 5px;
+	border: solid 1px transparent;
+	cursor: pointer;
+	outline: none;
+
+	&:hover
+	{
+		background-color: $primaryColorLight;
+		outline: none;
+		color: $lightHover;
+	}
+}
+
+.btn[disabled]
+{
+	background-color: transparent;
+	color: rgba(255, 255, 255, 0.5);
+	border-color: rgba(255, 255, 255, 0.5);
+	cursor: inherit;
+
+	&:hover
+	{
+		background-color: inherit;
+		color: rgba(255, 255, 255, 0.5);
+		border-color: rgba(255, 255, 255, 0.5);
+	}
+}
+
+.btn-alt
+{
+	@extend .btn;
+	background-color: transparent;
+	border: solid 1px $light;
+
+	&:hover
+	{
+		border-color: transparent;
+	}
+}
+
+.btn-warning
+{
+	@extend .btn;
+	background-color: $warningColor;
+	border: solid 1px $warningColorDark;
+	&:hover
+	{
+		background-color: $warningColorLight;
+	}
+}
+
+.logo
+{
+	width: 22px;
+	height: 22px;
+	background: url(../img/logo.png);
+	background-position: center;
+	background-size: cover;
+	display: inline-block;
+	position: relative;
+	top: 6px;
+}
+
+.draw-btn-alt
+{
+	border: solid 1px $light;
+	padding: 5px;
+	border-radius: 5px;
+
+	&:hover
+	{
+		border-color: $linkColorLight;
+	}
+}
+
+input, button
+{
+	font-family: inherit;
+	font-size: inherit;
+}
+
+input[type=text], input[type=number]
+{
+	padding: 5px;
+	border: solid white 1px;
+	border-radius: 2px;
+
+	&:focus
+	{
+		border-color: rgb(20, 116, 180);
+	}
+}
+
+.hidden
+{
+	display: none !important;
+}
+
+.modal
+{
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	z-index: 1;
+	color: $light;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	.modal-content
+	{
+		text-align: center;
+		padding: 35px;
+		width: 50vw;
+		height: 50vh;
+		position: relative;
+		top: -39px; // navbar height
+		z-index: 2;
+		border: solid 1px $darker;
+		border-radius: 5px;
+		background: $dark;
+		box-shadow: 0 0 5px $dark;
+		display: flex;
+		flex-direction: column;
+
+		.title
+		{
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+	}
+
+	.modal-header
+	{
+		text-align: right;
+		position: absolute;
+		top: 15px;
+		right: 15px;
+
+		.close-btn
+		{
+			cursor: pointer;
+			color: rgba(255, 255, 255, 0.7);
+
+			&:hover
+			{
+				color: rgba(255, 255, 255, 0.8);
+			}
+		}
+	}
+}
+
+@media(max-width: 700px)
+{
+	.modal
+	{
+		.modal-content
+		{
+			width: 65vw;
+		}
+	}
+}
+
+@media(max-height: 700px)
+{
+	.modal
+	{
+		.modal-content
+		{
+			height: 65vh;
+		}
+	}
+}
+
+@media(max-width: 400px)
+{
+	.modal
+	{
+		.modal-content
+		{
+			padding: 20px;
+		}
+	}
+}

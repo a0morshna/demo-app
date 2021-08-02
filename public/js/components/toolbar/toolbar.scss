@@ -1,0 +1,193 @@
+@import "../../../scss/global.scss";
+
+.toolbar
+{
+	height: 100%;
+	background-color: $dark;
+	padding: 0 10px;
+	margin: 0;
+	text-align: center;
+	color: $light;
+	font-size: 26px;
+	grid-column: 1;
+	touch-action: none; // prevent accidental scrolling on touch screen
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+
+	.toolbar-logo
+	{
+		@extend .logo;
+		position: absolute;
+		top: -30px;
+		margin-left: -10px;
+	}
+
+	.separator
+	{
+		color: rgba(255, 255, 255, 0.5);
+		padding: 6px 4px 10px 4px;
+		border: solid 1px transparent;
+		border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+		margin-bottom: 10px;
+	}
+
+	.color-separator
+	{
+		margin-top: 20px;
+	}
+
+	.btn-tool
+	{
+		display: block;
+		padding: 6px;
+		border-radius: 5px;
+		margin: 0 auto;
+		margin-bottom: 5px;
+		cursor: pointer;
+
+		&:hover
+		{
+			color: $lightHover;
+		}
+	}
+
+	ul
+	{
+		list-style: none;
+		padding: 0;
+		margin: 0px;
+	}
+
+	.btn-color
+	{
+		@extend .btn-tool;
+		display: block;
+		border: solid 1px $light;
+		width: 30px;
+		height: 30px;
+		border-radius: 10px;
+		padding: 0;
+		margin-bottom: 10px;
+
+		&:hover
+		{
+			cursor: pointer;
+			filter: brightness($brightnessFilterAmount);
+		}
+	}
+
+	.selected
+	{
+		color: $primaryColorLight;
+		padding-left: 0;
+		padding-right: 0;
+
+		&:hover
+		{
+			color: $linkColorLight;
+		}
+	}
+
+	.selected-color
+	{
+		border-color: $linkColorLight;
+	}
+
+	.disabled
+	{
+		color: $disabledColor;
+
+		&:hover
+		{
+			color: $disabledColorHover;
+		}
+	}
+
+	.line-icon
+	{
+		font-weight: bold;
+	}
+}
+
+@media(max-width: 700px)
+{
+	.toolbar
+	{
+		padding: 0 5px;
+		font-size: 24px;
+	}
+}
+
+@media(max-width: 480px)
+{
+	.toolbar
+	{
+		padding: 0;
+
+		.toolbar-logo
+		{
+			display: none;
+		}
+	}
+}
+
+@media(max-height: 845px)
+{
+	.toolbar
+	{
+		font-size: 24px;
+
+		.btn-tool
+		{
+			margin-bottom: 3px;
+		}
+
+		.color-separator
+		{
+			margin-top: 10px;
+		}
+
+		.separator
+		{
+			margin-bottom: 8px;
+		}
+	}
+}
+
+@media(max-height: 760px)
+{
+	.toolbar
+	{
+		font-size: 22px;
+
+		.separator
+		{
+			margin-bottom: 7px;
+		}
+
+		.btn-tool
+		{
+			margin-bottom: 0px;
+		}
+
+		.btn-color
+		{
+			width: 15px;
+			height: 15px;
+			margin-bottom: 5px;
+			padding: 5px;
+		}
+	}
+}
+
+@media(max-height: 685px)
+{
+	.toolbar
+	{
+		.btn-color
+		{
+			padding: 3px;
+		}
+	}
+}

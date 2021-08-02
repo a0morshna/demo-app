@@ -1,0 +1,37 @@
+<div class="modal hidden" id="background-modal">
+	<div class="modal-content background-selection">
+		<div class="modal-header">
+			<i id="close-modal" class="fas fa-times-circle close-btn"></i>
+		</div>
+
+		<h3 class="title">Background</h3>
+
+		<ul class="tabs">
+			<li class="active" id="tab-image">Image</li>
+			<li id="tab-color">Solid Color</li>
+		</ul>
+
+		<input id="image-file-input" class="hide-on-drop" type="file" accept="image/*"/>
+		<div class="drop-area">
+			<div class="hide-on-drop hide-on-image-input">
+				<p>or drop image here</p>
+				<i class="fas fa-image fa-8x"></i>
+			</div>
+
+			<img id="bg-image-preview"/>
+		</div>
+
+		<button id="add-image" class="btn" disabled>Add Image</button>
+
+		<div class="tab-content hidden" id="tab-content-color">
+			<div class="bg-color-settings">
+				<input type="color" id="bg-color" title="Click to edit"/>
+			</div>
+
+			<div class="buttons">
+				<button id="bg-clear" class="btn-warning clear-btn">Make Transparent</button>
+				<button id="bg-fill" class="btn">Fill With Color</button>
+			</div>
+		</div>
+	</div>
+</div>

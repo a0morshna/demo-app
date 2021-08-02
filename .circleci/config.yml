@@ -18,7 +18,11 @@ jobs:
          paths:
              - ./
   push:
-    machine: true
+    docker:
+      - image: google/cloud-sdk:slim
+        auth:
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PASSWORD
     steps:
      - attach_workspace:
          at: ./

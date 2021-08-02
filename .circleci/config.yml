@@ -39,7 +39,7 @@ workflows:
             - docker
           filters:
            branches:
-             only: master
+             only: main
       - push:
           context:
            - GCLOUD

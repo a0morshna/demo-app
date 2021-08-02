@@ -9,10 +9,15 @@ jobs:
           password: $DOCKER_PASSWORD
     steps:
      - checkout
+     - setup_remote_docker
+     - run:
+          name: Install dependencies
+          command: 
+            pip install docker-compose==2.3
      - run: 
         name: Build image
         command: |
-          docker build -t webbb .
+          docker build -f Dockerfile -t webbb .
           docker save webbb:latest | gzip > webbb_latest.tar.gz
   push:
     docker:

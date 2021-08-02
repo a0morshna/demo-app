@@ -4,18 +4,18 @@ jobs:
     docker:
       - image: google/cloud-sdk
         auth:
-          username: _json_key
+          username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
     steps:
      - checkout
      - run: 
-         name: Build image
-         command: |
-           docker build -t webbb .
-           docker save webbb:latest | gzip > webbb_latest.tar.gz
+        name: Build image
+        command: |
+          docker build -t webbb .
+          docker save webbb:latest | gzip > webbb_latest.tar.gz
   push:
     docker:
-      - image: google/cloud-sdk:slim
+      - image: google/cloud-sdk
         auth:
           username: _json_key
           password: $DOCKER_PASSWORD
@@ -33,11 +33,13 @@ workflows:
   build_and_push:
     jobs:
       - build:
-         filters:
+          context:
+            - docker
+          filters:
            branches:
              only: master
       - push:
-         context:
+          context:
            - GCLOUD
-         requires:
+          requires:
            - build

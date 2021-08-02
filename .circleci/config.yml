@@ -29,10 +29,25 @@ jobs:
       - run: 
           name: GCP auth
           command: |
-            echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > keyfile.json
-            gcloud auth activate-service-account --key-file keyfile.json
-            gcloud --quiet config set project $GOOGLE_PROJECT_ID
-            gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
+            echo " { \"type\": \"service_account\", 
+            \"private_key_id\": \"$GCLOUD_PRIVATE_KEY_ID\", 
+            \"private_key\": \"$GOOGLE_SERVICE_KEY\", 
+            \"client_email\": \"$GOOGLE_CLIENT_EMAIL\",
+            \"client_id\": \"$GCLOUD_CLIENT_ID\",
+            \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",
+            \"token_uri\": \"https://oauth2.googleapis.com/token\", 
+            \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\", 
+            \"client_x509_cert_url\": \"$GCLOUD_AUTH_PROVIDER_X509\" } " >keyfile.json
+            gcloud auth activate-service-account --key-file=keyfile.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            cd ${HOME}/project
+            docker load -i ${HOME}/project/webbb_latest.tar.gz
+            docker tag webbb:latest eu.gcr.io/${GOOGLE_PROJECT_ID}/webbb:${CIRCLE_SHA1}
+            docker images
+            sleep 15
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+            docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/webbb:${CIRCLE_SHA1}
 
 workflows:
   version: 2

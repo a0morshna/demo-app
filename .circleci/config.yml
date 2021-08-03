@@ -9,12 +9,14 @@ jobs:
           password: $DOCKER_PASSWORD
     steps:
      - checkout
-     - setup_remote_docker
+     - setup_remote_docker:
+        version: 19.03.13
      - run: 
         name: Build image
         command: |
-          docker build -f Dockerfile -t webbb .
-          docker save webbb:latest | gzip > webbb_latest.tar.gz
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t draw-app:$TAG .
+
   push:
     docker:
       - image: google/cloud-sdk
@@ -34,18 +36,15 @@ jobs:
             \"token_uri\": \"https://oauth2.googleapis.com/token\", 
             \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\", 
             \"client_x509_cert_url\": \"$GCLOUD_AUTH_PROVIDER_X509\" } " >cred.json
+
             gcloud auth activate-service-account --key-file=cred.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
             
-            cd ${HOME}/project
-            docker load -i ${HOME}/project/webbb_latest.tar.gz
-            docker tag webbb:latest eu.gcr.io/${GOOGLE_PROJECT_ID}/webbb:${CIRCLE_SHA1}
-            docker images
-            
-            sleep 15
+            docker push drs-docker:$TAG
+
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://eu.gcr.io
-            docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/webbb:${CIRCLE_SHA1}
+            docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${CIRCLE_SHA1}
 
 workflows:
   version: 2

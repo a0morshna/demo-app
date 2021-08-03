@@ -40,14 +40,3 @@ jobs:
 
             docker tag draw-app eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$CIRCLE_SHA1
             gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$CIRCLE_SHA1
-
-workflows:
-  version: 2
-  build:
-    jobs:
-      - build:
-          context:
-           - GCLOUD
-           - docker
-          requires:
-           - build

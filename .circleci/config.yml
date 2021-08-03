@@ -49,7 +49,7 @@ jobs:
             docker build -t draw-app:$TAG -f ./Dockerfile .
 
             docker tag draw-app:$TAG eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${CIRCLE_SHA1}
-            gcloud docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${CIRCLE_SHA1}
+            gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${CIRCLE_SHA1}
 
 workflows:
   version: 2

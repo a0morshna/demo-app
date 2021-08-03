@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/alpine-3.11
+      - image: circleci/4-alpine-3.11
         auth:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD

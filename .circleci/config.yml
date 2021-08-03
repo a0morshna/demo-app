@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/lts-alpine-3.11
+      - image: circleci/alpine-3.11
         auth:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD

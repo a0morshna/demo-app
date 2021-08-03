@@ -9,15 +9,18 @@ jobs:
           password: $DOCKER_PASSWORD
     steps:
      - checkout
-     - setup_remote_docker:
-        version: 20.10.6
-        
      - run: 
-        name: Build image
+        name: GCP auth
         command: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t draw-app:$TAG -f ./Dockerfile .
-
+          echo " { \"type\": \"service_account\",
+          \"private_key_id\": \"$GCLOUD_PRIVATE_KEY_ID\", 
+          \"private_key\": \"$GOOGLE_SERVICE_KEY\", 
+          \"client_email\": \"$GCLOUD_CLIENT_EMAIL\",
+          \"client_id\": \"$GCLOUD_CLIENT_ID\",
+          \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",
+          \"token_uri\": \"https://oauth2.googleapis.com/token\", 
+          \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\", 
+          \"client_x509_cert_url\": \"$GCLOUD_AUTH_PROVIDER_X509\" } " >cred.json
   push:
     docker:
       - image: google/cloud-sdk
@@ -25,24 +28,23 @@ jobs:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
     steps:
-      - setup_remote_docker
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+        
       - run: 
-          name: GCP auth
+          name: Build image
           command: |
-            echo " { \"type\": \"service_account\",
-            \"private_key_id\": \"$GCLOUD_PRIVATE_KEY_ID\", 
-            \"private_key\": \"$GOOGLE_SERVICE_KEY\", 
-            \"client_email\": \"$GCLOUD_CLIENT_EMAIL\",
-            \"client_id\": \"$GCLOUD_CLIENT_ID\",
-            \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",
-            \"token_uri\": \"https://oauth2.googleapis.com/token\", 
-            \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\", 
-            \"client_x509_cert_url\": \"$GCLOUD_AUTH_PROVIDER_X509\" } " >cred.json
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t draw-app:$TAG -f ./Dockerfile .
+      - run: 
+          name: GCP build
+          command: |
 
             gcloud auth activate-service-account --key-file=cred.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            
+
             docker tag draw-app eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$CIRCLE_SHA1
             gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$CIRCLE_SHA1
 

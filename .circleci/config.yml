@@ -8,37 +8,30 @@ jobs:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
     steps:
-     - checkout
-     - run: 
-        name: GCP auth
-        command: |
-          echo " { \"type\": \"service_account\",
-          \"private_key_id\": \"$GCLOUD_PRIVATE_KEY_ID\", 
-          \"private_key\": \"$GOOGLE_SERVICE_KEY\", 
-          \"client_email\": \"$GCLOUD_CLIENT_EMAIL\",
-          \"client_id\": \"$GCLOUD_CLIENT_ID\",
-          \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",
-          \"token_uri\": \"https://oauth2.googleapis.com/token\", 
-          \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\", 
-          \"client_x509_cert_url\": \"$GCLOUD_AUTH_PROVIDER_X509\" } " >cred.json
-  push:
-    docker:
-      - image: google/cloud-sdk
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD
-    steps:
       - checkout
       - setup_remote_docker:
           version: 20.10.6
-        
+      - run: 
+          name: GCP auth
+          command: |
+            echo " { \"type\": \"service_account\",
+            \"private_key_id\": \"$GCLOUD_PRIVATE_KEY_ID\", 
+            \"private_key\": \"$GOOGLE_SERVICE_KEY\", 
+            \"client_email\": \"$GCLOUD_CLIENT_EMAIL\",
+            \"client_id\": \"$GCLOUD_CLIENT_ID\",
+            \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",
+            \"token_uri\": \"https://oauth2.googleapis.com/token\", 
+            \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\", 
+            \"client_x509_cert_url\": \"$GCLOUD_AUTH_PROVIDER_X509\" } " >cred.json
+
       - run: 
           name: Build image
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t draw-app:$TAG -f ./Dockerfile .
+
       - run: 
-          name: GCP build
+          name: GCP push
           command: |
 
             gcloud auth activate-service-account --key-file=cred.json
@@ -54,12 +47,7 @@ workflows:
     jobs:
       - build:
           context:
-            - docker
-          filters:
-           branches:
-             only: main
-      - push:
-          context:
            - GCLOUD
+           - docker
           requires:
            - build

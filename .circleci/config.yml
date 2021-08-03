@@ -41,7 +41,6 @@ jobs:
             gcloud auth activate-service-account --key-file=cred.json
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud components update
 
             docker tag draw-app eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$CIRCLE_SHA1
             gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$CIRCLE_SHA1

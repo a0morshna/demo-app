@@ -10,10 +10,6 @@ jobs:
     steps:
      - checkout
      - setup_remote_docker
-     - run:
-          name: Install dependencies
-          command: 
-            pip install docker-compose==1.29.1
      - run: 
         name: Build image
         command: |

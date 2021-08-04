@@ -4,16 +4,21 @@ jobs:
   build:
     docker:
       - image: google/cloud-sdk
+        auth:
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PASSWORD
     steps:
      - checkout
-     - setup_remote_docker
+     - setup_remote_docker:
+        version: 20.10.6
      - run: 
         name: Build image
         command: |
           TAG=${CIRCLE_SHA1::7}
-          docker build -f Dockerfile -t gcr.io/$GOOGLE_PROJECT_ID/draw-app:${TAG} $@ .
-          echo "$JSON_64" | base64 -d | docker login -u _json_key --password-stdin https://gcr.io
-          docker push gcr.io/$GOOGLE_PROJECT_ID/draw-app:${TAG}
+          docker build -t draw-app:$TAG -f ./Dockerfile .
+          echo "$JSON_64" | base64 -d | docker login -u _json_key --password-stdin https://eu.gcr.io
+          docker tag draw-app:$TAG eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${TAG}
+          docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${TAG}
 
   deploy:
     docker:

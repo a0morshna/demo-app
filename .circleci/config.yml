@@ -19,7 +19,7 @@ jobs:
           gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
           docker build -f ./Dockerfile -t gcr.io/teraform-1-319109/draw-app:$TAG $@ .
-          cat gcloud-service-key.json | docker login https://gcr.io -u _json_key --password-stdin
+          echo gcloud-service-key.json | docker login https://gcr.io -u _json_key --password-stdin
           docker push gcr.io/teraform-1-319109/draw-app:$TAG
 
   deploy:

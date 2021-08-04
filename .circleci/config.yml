@@ -28,12 +28,10 @@ jobs:
       - run: 
           name: Deploy application to Google Kubernetes Engine
           command: |
-
-            base --version
-            
             TAG=${CIRCLE_SHA1::7}
 
-            echo "$JSON_64" | base64 --decode --ignore-garbage > gcloud-service-key.json
+            echo "$JSON_64" > json.cred
+            base64 -d  json.cred > gcloud-service-key.json
             gcloud auth activate-service-account --key-file=gcloud-service-key.json
 
             gcloud --quiet config set project $GOOGLE_PROJECT_ID

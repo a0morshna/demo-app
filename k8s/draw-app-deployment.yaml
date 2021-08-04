@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: draw-app-deployment
+  labels:
+    app: draw-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-deploy
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: app-deploy
+        tier: backend
+    spec:
+      containers:
+        - image: eu.gcr.io/teraform-1-319109/draw-app
+          name: demo-app
+          ports:
+            - containerPort: 5000
+              name: app-deploy

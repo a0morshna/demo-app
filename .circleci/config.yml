@@ -16,21 +16,21 @@ jobs:
         name: Build image
         command: |
           TAG=${CIRCLE_SHA1::7}
-          docker build -f ./Dockerfile -t gsr.io/a0morchna-circleci/circle:$TAG $@ .
+          docker build -f ./Dockerfile -t eu.gcr.io/teraform-1-319109/draw-app:$TAG $@ .
           echo $JSON_64 | base64 -d | docker login -u _json_key --password-stdin https://gcr.io
-          docker push gcr.io/a0morshna-circleci/circle:$TAG
+          docker push eu.gcr.io/teraform-1-319109/draw-app:$TAG
 
-  push:
+  deploy:
     docker:
       - image: google/cloud-sdk
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD
+        environment:
+          DEPLOYMENT_NAME: draw-app
+          DEPLOYMENT_CONTAINER_NAME: draw-app
     steps:
       - setup_remote_docker:
           version: 20.10.6
       - run: 
-          name: GCP auth
+          name: Deploy application to Google Kubernetes Engine
           command: |
             TAG=${CIRCLE_SHA1::7}
 
@@ -40,6 +40,8 @@ jobs:
             gcloud --quiet config set project $GOOGLE_PROJECT_ID
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
+            gcloud container clusters get-credentials circleci
+            kubectl set image deployment/circle-ci-cluster $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/teraform-1-319109/$DEPLOYMENT_NAME:$TAG
 workflows:
   version: 2
   build_and_push:
@@ -50,7 +52,7 @@ workflows:
           filters:
            branches:
              only: main
-      - push:
+      - deploy:
           context:
            - GCLOUD
           requires:

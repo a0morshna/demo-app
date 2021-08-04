@@ -20,9 +20,6 @@ jobs:
   deploy:
     docker:
       - image: google/cloud-sdk
-        auth:
-          username: _json_key
-          password: $JSON_64
         environment:
           DEPLOYMENT_NAME: draw-app
           DEPLOYMENT_CONTAINER_NAME: draw-app

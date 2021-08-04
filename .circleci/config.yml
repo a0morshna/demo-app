@@ -39,18 +39,10 @@ jobs:
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
       - run:
-          name: Install envsubst
-          command: |
-            apt-get install -qq -y gettext
-      - run:
           name: Deploy to GKE
           command: |
-            export INSTANCE_NAME=${CIRCLE_BRANCH}
-            export VERSION=${CIRCLE_BRANCH}-${CIRCLE_SHA1}
-            envsubst < app.yaml > myapp.yaml
-            kubectl apply -f myapp.yaml
-
-workflows:
+            kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG --namespace staging
+workflows: 
   version: 2
   build_and_push:
     jobs:

@@ -11,6 +11,9 @@ jobs:
         name: Build image
         command: |
           TAG=${CIRCLE_SHA1::7}
+          docker build -f Dockerfile -t gcr.io/$GOOGLE_PROJECT_ID/draw-app:${TAG} $@ .
+          echo "$JSON_64" | base64 -d | docker login -u _json_key --password-stdin https://gcr.io
+          docker push gcr.io/$GOOGLE_PROJECT_ID/draw-app:${TAG}
 
   deploy:
     docker:
@@ -25,21 +28,14 @@ jobs:
           command: |
             TAG=${CIRCLE_SHA1::7}
 
-            echo "$JSON_64" | base64 -d > gcloud-service-key.json
+            echo $JSON_64 | base64 --d > gcloud-service-key.json
             gcloud auth activate-service-account --key-file gcloud-service-key.json
 
             gcloud --quiet config set project $GOOGLE_PROJECT_ID
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
-
-            TAG=${CIRCLE_SHA1::7}
-            docker build -t draw-app:$TAG -f ./Dockerfile .
-            docker tag draw-app:$TAG eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$TAG
-            gcloud docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$TAG
-            gcloud docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:$TAG
-
             gcloud container clusters get-credentials circleci
-            kubectl set image deployment/circle-ci-cluster $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_NAME:$TAG
+            kubectl set image deployment/circle-ci-cluster $DEPLOYMENT_CONTAINER_NAME=gcr.io/$GOOGLE_PROJECT_ID/$DEPLOYMENT_NAME:$TAG
 
 workflows:
   version: 2

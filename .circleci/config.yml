@@ -45,7 +45,7 @@ workflows:
     jobs:
       - build:
           context:
-            - docker
+           - GCLOUD
           filters:
            branches:
              only: main
@@ -54,3 +54,6 @@ workflows:
            - GCLOUD
           requires:
            - build
+          filters:
+           branches:
+             only: main

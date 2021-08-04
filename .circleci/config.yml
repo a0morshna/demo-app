@@ -39,6 +39,12 @@ jobs:
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
       - run:
+          name: Deploy to Kubernetes
+          command: |
+            KUBECONFIG=~/.kube/config ENVIRONMENT=campaignify-staging REVISION=$CIRCLE_SHA1 kubernetes-deploy campaignify-staging gke_campaignify-staging_us-central1-a_staging
+
+
+      - run:
           name: Deploy to GKE
           command: |
             kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG-$CIRCLE_SHA1

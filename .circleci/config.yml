@@ -25,14 +25,12 @@ jobs:
           DEPLOYMENT_CONTAINER_NAME: draw-app
     steps:
       - setup_remote_docker
-      - run:
-          name: Store Service Account
-          command: echo $JSON_64 > gcloud-service-key.json
       - run: 
           name: Deploy application to Google Kubernetes Engine
           command: |
             TAG=${CIRCLE_SHA1::7}
 
+            echo "$JSON_64" > gcloud-service-key.json
             gcloud auth activate-service-account --key-file=gcloud-service-key.json
 
             gcloud --quiet config set project $GOOGLE_PROJECT_ID

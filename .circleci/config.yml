@@ -41,8 +41,15 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
-            kubectl apply -f app.yaml
-            # kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG
+            systemctl start etcd
+            systemctl start docker
+            systemctl start kube-apiserver
+            systemctl start kube-controller-manager
+            systemctl start kube-scheduler
+            systemctl start kubelet
+            systemctl start kube-proxy
+
+            kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG-$CIRCLE_SHA1
 workflows: 
   version: 2
   build_and_push:

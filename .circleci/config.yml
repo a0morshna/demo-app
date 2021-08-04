@@ -41,8 +41,7 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
-            kubectl expose deployment $DEPLOYMENT_NAME --type LoadBalancer --port 8080 --target-port 5000
-            # kubectl apply -f app.yaml
+            kubectl apply -f app.yaml
             # kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG
 workflows: 
   version: 2

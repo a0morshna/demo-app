@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
-            kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG --namespace staging
+            kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG --draw-app staging
 workflows: 
   version: 2
   build_and_push:

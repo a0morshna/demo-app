@@ -42,3 +42,26 @@ spec:
           ports:
             - name: http
               containerPort: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  namespace: draw-app
+  name: draw-app-${INSTANCE_NAME}
+  labels:
+    app.kubernetes.io/name: draw-app
+    app.kubernetes.io/instance: ${INSTANCE_NAME}
+spec:
+  entryPoints:
+    - https
+  routes:
+    - match: Host(`${INSTANCE_NAME}.draw-app.gcp.app.com`)
+      kind: Rule
+      services:
+        - namespace: draw-app
+          name: draw-app-${INSTANCE_NAME}
+          port: 8080
+  tls:
+    certResolver: letsencrypt
+    domains:
+      - main: "*.draw-app.gcp.app.com"

@@ -38,9 +38,18 @@ jobs:
             gcloud --quiet config set project $GOOGLE_PROJECT_ID
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
-            gcloud container clusters get-credentials gke-cluster1 --region europe-central2
-            kubectl create -f ./k8s/draw-app-deployment.yaml
-
+      - run:
+          name: Install envsubst
+          command: |
+            apt-get install -qq -y gettext
+      - run:
+          name: Deploy to GKE
+          command: |
+            export INSTANCE_NAME=${CIRCLE_BRANCH}
+            export VERSION=${CIRCLE_BRANCH}-${CIRCLE_SHA1}
+            envsubst < draw-app-deployment.yaml > myapp.yaml
+            kubectl apply -f myapp.yaml
+            
 workflows:
   version: 2
   build_and_push:

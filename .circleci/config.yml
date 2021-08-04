@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
+            kubectl apply -f app.yaml
             kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG
 workflows: 
   version: 2

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gke-cluster
+  name: gke-cluster1
   labels:
     app: draw-app
 spec:

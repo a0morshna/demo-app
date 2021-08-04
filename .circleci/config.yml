@@ -18,7 +18,7 @@ jobs:
           docker build -t draw-app:$TAG -f ./Dockerfile .
           echo "$JSON_64" | base64 -d | docker login -u _json_key --password-stdin https://eu.gcr.io
           docker tag draw-app:$TAG eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${TAG}
-          docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${TAG}
+          docker -- push eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${TAG}
 
   deploy:
     docker:

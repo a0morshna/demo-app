@@ -28,6 +28,9 @@ jobs:
       - run: 
           name: Deploy application to Google Kubernetes Engine
           command: |
+
+            base --version
+            
             TAG=${CIRCLE_SHA1::7}
 
             echo "$JSON_64" | base64 --decode --ignore-garbage > gcloud-service-key.json

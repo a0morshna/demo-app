@@ -4,9 +4,6 @@ jobs:
   build:
     docker:
       - image: google/cloud-sdk
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD
     steps:
      - checkout
      - setup_remote_docker:

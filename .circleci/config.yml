@@ -41,8 +41,7 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
-            kubectl proxy --port=8080
-            kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG
+            kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG --port=8080
 workflows: 
   version: 2
   build_and_push:

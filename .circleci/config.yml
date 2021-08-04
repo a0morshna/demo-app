@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 
 jobs:
   build:
@@ -6,9 +6,7 @@ jobs:
       - image: google/cloud-sdk
     steps:
      - checkout
-     - setup_remote_docker:
-        version: 20.10.6
-        
+     - setup_remote_docker
      - run: 
         name: Build image
         command: |

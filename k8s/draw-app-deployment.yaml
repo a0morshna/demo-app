@@ -17,7 +17,7 @@ spec:
         tier: backend
     spec:
       containers:
-        - image: eu.gcr.io/teraform-1-319109/draw-app:da87f71
+        - image: eu.gcr.io/teraform-1-319109/draw-app
           name: draw-app
           ports:
             - containerPort: 5000

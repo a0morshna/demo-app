@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
+            export KUBECONFIG=/etc/kubernetes/admin.conf or $HOME/.kube/config
             kubectl set image deployment/$DEPLOYMENT_CONTAINER_NAME $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG --namespace staging
 workflows: 
   version: 2

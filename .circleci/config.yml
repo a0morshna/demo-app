@@ -47,9 +47,9 @@ jobs:
           command: |
             export INSTANCE_NAME=${CIRCLE_BRANCH}
             export VERSION=${CIRCLE_BRANCH}-${CIRCLE_SHA1}
-            envsubst < draw-app-deployment.yaml > myapp.yaml
+            envsubst < /k8s/draw-app-deployment.yaml > /k8s/myapp.yaml
             kubectl apply -f myapp.yaml
-            
+
 workflows:
   version: 2
   build_and_push:

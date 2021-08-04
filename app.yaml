@@ -14,7 +14,7 @@ spec:
   ports:
     - protocol: TCP
       name: http
-      port: 80
+      port: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,4 +41,4 @@ spec:
           image: ${GCP_REGISTRY}/draw-app:${VERSION}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080

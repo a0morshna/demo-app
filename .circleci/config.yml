@@ -11,8 +11,15 @@ jobs:
         name: Build image
         command: |
           TAG=${CIRCLE_SHA1::7}
+
+          echo $JSON_64 | base64 --d > gcloud-service-key.json
+          gcloud auth activate-service-account --key-file gcloud-service-key.json
+
+          gcloud --quiet config set project $GOOGLE_PROJECT_ID
+          gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
+
           docker build -f ./Dockerfile -t gcr.io/teraform-1-319109/draw-app:$TAG $@ .
-          echo $JSON_64 | base64 -d | docker login -u _json_key --password-stdin https://gcr.io
+          cat gcloud-service-key.json | docker login https://gcr.io -u _json_key --password-stdin
           docker push gcr.io/teraform-1-319109/draw-app:$TAG
 
   deploy:

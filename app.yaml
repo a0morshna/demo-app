@@ -14,7 +14,7 @@ spec:
   ports:
     - protocol: TCP
       name: http
-      port: 8080
+      port: 5000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,7 +41,7 @@ spec:
           image: ${GCP_REGISTRY}/draw-app:${VERSION}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 5000
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -60,7 +60,7 @@ spec:
       services:
         - namespace: draw-app
           name: draw-app-${INSTANCE_NAME}
-          port: 8080
+          port: 5000
   tls:
     certResolver: letsencrypt
     domains:

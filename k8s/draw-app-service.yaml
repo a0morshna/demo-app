@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: draw-app-service
   labels:
-    app: circle
+    app: app
 spec:
   ports:
     - port: 5000

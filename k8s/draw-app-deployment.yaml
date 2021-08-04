@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - image: eu.gcr.io/teraform-1-319109/draw-app
-          name: demo-app
+          name: draw-app
           ports:
             - containerPort: 5000
               name: app-deploy

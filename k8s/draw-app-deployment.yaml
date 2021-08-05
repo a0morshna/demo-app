@@ -20,5 +20,5 @@ spec:
         - image: eu.gcr.io/teraform-1-319109/draw-app
           name: draw-app
           ports:
-            - containerPort: 5000
+            - containerPort: 8080
               name: app-deploy

@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: draw-app-service
   labels:
-    app: app
+    app: circle
 spec:
   ports:
-    - port: 5000
     - port: 8080
   selector:
     app: app-deploy

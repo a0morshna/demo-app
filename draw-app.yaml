@@ -17,13 +17,13 @@ spec:
         app: "draw-app"
     spec:
       containers:
-      - name: "draw-app-sha256-1"
-        image: "eu.gcr.io/teraform-1-319109/draw-app@sha256:2fefdfa748e9d4e4ff2e7e3e369f016713b214364e45ad099505ad311d9694a2"
+      - name: "draw-app-1"
+        image: "eu.gcr.io/teraform-1-319109/draw-app:39897de"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "draw-app-service"
+  name: "draw-app-hpa-8bbw"
   namespace: "default"
   labels:
     app: "draw-app"
@@ -33,7 +33,7 @@ spec:
     name: "draw-app"
     apiVersion: "apps/v1"
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 5
   metrics:
   - type: "Resource"
     resource:

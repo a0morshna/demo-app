@@ -43,7 +43,6 @@ jobs:
           command: |
 
             gcloud container clusters get-credentials gke-cluster1 --zone europe-central2
-            kubectl create -f ./demo-app/app.yaml
             kubectl set image deployment/gke-cluster1 gke-cluster1=eu.gcr.io/${GOOGLE_PROJECT_ID}/$DEPLOYMENT_CONTAINER_NAME:$TAG-$CIRCLE_SHA1
 workflows: 
   version: 2

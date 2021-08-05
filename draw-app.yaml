@@ -1,0 +1,38 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "draw-app-deployment"
+  labels:
+    app: "draw-app"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "draw-app"
+  template:
+    metadata:
+      labels:
+        app: "draw-app"
+    spec:
+      containers:
+      - name: "draw-app-1"
+        image: "eu.gcr.io/teraform-1-319109/draw-app:057c674"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "draw-app-service"
+  labels:
+    app: "draw-app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "draw-app"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80

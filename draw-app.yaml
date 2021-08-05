@@ -15,7 +15,7 @@ spec:
         app: "draw-app"
     spec:
       containers:
-      - name: "draw-app"
+      - name: "draw-app-sha256-1"
         image: "eu.gcr.io/teraform-1-319109/draw-app@sha256:2fefdfa748e9d4e4ff2e7e3e369f016713b214364e45ad099505ad311d9694a2"
 ---
 apiVersion: "autoscaling/v2beta1"

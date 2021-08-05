@@ -24,7 +24,7 @@ jobs:
       - image: google/cloud-sdk
         environment:
           DEPLOYMENT_NAME: draw-app
-          DEPLOYMENT_CONTAINER_NAME: draw-app
+          DEPLOYMENT_CONTAINER_NAME: draw-app-1
     steps:
       - setup_remote_docker
       - run: 

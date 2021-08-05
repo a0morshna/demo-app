@@ -15,7 +15,7 @@ spec:
         app: "draw-app"
     spec:
       containers:
-      - name: "draw-app-1"
+      - name: "draw-app"
         image: "eu.gcr.io/teraform-1-319109/draw-app:057c674"
 ---
 apiVersion: "autoscaling/v2beta1"

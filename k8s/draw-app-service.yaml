@@ -1,13 +1,19 @@
-apiVersion: v1
-kind: Service
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
 metadata:
-  name: draw-app-service
+  name: "draw-app-hpa-u9dc"
+  namespace: "myapp"
   labels:
-    app: circle
+    app: "draw-app"
 spec:
-  ports:
-    - port: 8080
-  selector:
-    app: app-deploy
-    tier: backend
-  type: LoadBalancer
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "draw-app"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80

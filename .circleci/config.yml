@@ -41,8 +41,7 @@ jobs:
       - run:
           name: Deploy to GKE
           command: |
-
-            gcloud container clusters get-credentials gke-cluster1 --zone europe-central2
+            kubectl apply -f app.yaml
             kubectl set image -f deployment/app.yaml draw-app=eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app:${TAG} --local -o yaml
 workflows: 
   version: 2

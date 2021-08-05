@@ -8,6 +8,6 @@ WORKDIR /app
 
 RUN npm install && npm run build-prod && npm prune --production
 
-EXPOSE 5000
+EXPOSE 3000
 
 ENTRYPOINT ["node", "app.js"]

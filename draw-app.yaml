@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: "draw-app"
-        image: "eu.gcr.io/teraform-1-319109/draw-app:057c674"
+        image: "eu.gcr.io/teraform-1-319109/draw-app:1e23586"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"

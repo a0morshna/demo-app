@@ -39,7 +39,7 @@ jobs:
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
 
             gcloud container clusters get-credentials gke-cluster1 --zone europe-central2
-            kubectl set image deployment/draw-app-deployment $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app/$DEPLOYMENT_NAME:$TAG
+            kubectl set image deployment/draw-app-deployment $DEPLOYMENT_CONTAINER_NAME=eu.gcr.io/${GOOGLE_PROJECT_ID}/draw-app-1/$DEPLOYMENT_NAME:$TAG
 
 workflows: 
   version: 2
